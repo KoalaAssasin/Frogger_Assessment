@@ -12,6 +12,12 @@ public class GameManager : MonoBehaviour
     public int currentScore = 0; //The current score in this round.
     public int highScore = 0; //The highest score achieved either in this session or over the lifetime of the game.
     public TMP_Text currentScoreUI;
+    public TMP_Text currentRoundUI;
+
+    [Header("Startup")]
+    public TMP_Text readyUI;
+    public float Starttime1 = 2;
+    public AudioClip GetReady;
 
     [Header("Playable Area")]
     public float levelConstraintTop; //The maximum positive Y value of the playable space.
@@ -23,17 +29,39 @@ public class GameManager : MonoBehaviour
     public bool isGameRunning; //Is the gameplay part of the game current active?
     public float totalGameTime; //The maximum amount of time or the total time avilable to the player.
     public float gameTimeRemaining; //The current elapsed time
+    public int currentRound = 1;
 
     // Start is called before the first frame update
     void Start()
     {
         currentScoreUI.text = "0";
+        currentRoundUI.text = "1";
+        GetComponent<AudioSource>().PlayOneShot(GetReady);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Starttime1 > 1)
+        {
+            Starttime1 -= Time.deltaTime;
+            readyUI.text = "Ready?";
+
+        }
+        else if (Starttime1 > 0)
+        {
+            GameObject playerMover = GameObject.Find("Player");
+            Player playerScript = playerMover.GetComponent<Player>();
+
+            playerScript.playerCanMove = true;
+
+            Starttime1 -= Time.deltaTime;
+            readyUI.text = "Go!";
+        }
+        else if (Starttime1 <= 0)
+        {
+            readyUI.text = " ";
+        }
     }
 
     public void UpdateScore(int scoreNum)

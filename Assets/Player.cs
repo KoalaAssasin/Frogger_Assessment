@@ -36,7 +36,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(playerIsAlive)
+        if(playerIsAlive && playerCanMove == true)
         {
             if (Input.GetKeyDown(KeyCode.UpArrow) && transform.position.y < myGameManager.levelConstraintTop)
             {
