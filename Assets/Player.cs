@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEditor.ShortcutManagement;
 using UnityEngine;
+using TMPro;
 
 /// <summary>
 /// This script must be used as the core Player script for managing the player character in the game.
@@ -11,8 +12,9 @@ public class Player : MonoBehaviour
     public string playerName = ""; //The players name for the purpose of storing the high score
    
     public int playerTotalLives; //Players total possible lives.
-    public int playerLivesRemaining; //PLayers actual lives remaining.
-   
+    public int playerLivesRemaining = 3; //PLayers actual lives remaining.
+    public TMP_Text currentLivesUI;
+
     public bool playerIsAlive = true; //Is the player currently alive?
     public bool playerCanMove = false; //Can the player currently move?
     public bool onPlatform = false;
@@ -21,16 +23,25 @@ public class Player : MonoBehaviour
     private GameManager myGameManager; //A reference to the GameManager in the scene.
 
     public GameObject explosionFX;
+    public GameObject FrogIcon;
+    public int round = 1;
 
     //Audio section
     public AudioClip jumpSound;
     public AudioClip deathSound;
 
+    //Setting if score zones can be landed in again
+    public bool Scorezone0Filled = false;
+    public bool Scorezone1Filled = false;
+    public bool Scorezone2Filled = false;
+    public bool Scorezone3Filled = false;
+    public bool Scorezone4Filled = false;
 
     // Start is called before the first frame update
     void Start()
     {
         myGameManager = GameObject.FindObjectOfType<GameManager>();
+        currentLivesUI.text = playerLivesRemaining.ToString();
     }
 
     // Update is called once per frame
@@ -50,9 +61,7 @@ public class Player : MonoBehaviour
             {
                 transform.Translate(new Vector2(0, -1));
                 GetComponent<AudioSource>().PlayOneShot(jumpSound);
-                //Another way to do this: (still need to add audiosource reference for it to work though)
-                //GetComponent<AudioSource>().clip = jumpSound;
-                //GetComponent<AudioSource>().Play();
+
             }
             if (Input.GetKeyDown(KeyCode.LeftArrow) && transform.position.x > myGameManager.levelConstraintLeft)
             {
@@ -98,6 +107,94 @@ public class Player : MonoBehaviour
                 myGameManager.UpdateScore(10);
                 Destroy(collision.gameObject);
             }
+
+            // Scoring Zone code
+            else if (collision.transform.tag == "Scorer0")
+            {
+                if (Scorezone0Filled == false)
+                {
+                    myGameManager.UpdateScore(100);
+                    Scorezone0Filled = true;
+
+                    Vector2 Goal0 = new Vector2(-6.14f, 6.39f);
+                    GameObject Score0 = Instantiate(FrogIcon, Goal0, Quaternion.identity) as GameObject;
+
+                    round = myGameManager.RoundAdder(round);
+                }
+                else
+                {
+                    PlayerKiller();
+                }
+            }
+            else if (collision.transform.tag == "Scorer1")
+            {
+                if (Scorezone1Filled == false)
+                {
+                    myGameManager.UpdateScore(100);
+                    Scorezone1Filled = true;
+
+                    Vector2 Goal1 = new Vector2(-3.09f, 6.39f);
+                    GameObject Score1 = Instantiate(FrogIcon, Goal1, Quaternion.identity) as GameObject;
+
+                    round = myGameManager.RoundAdder(round);
+                }
+                else
+                {
+                    PlayerKiller();
+                }
+
+            }
+            else if (collision.transform.tag == "Scorer2")
+            {
+                if (Scorezone2Filled == false)
+                {
+                    myGameManager.UpdateScore(100);
+                    Scorezone2Filled = true;
+
+                    Vector2 Goal2 = new Vector2(-0.04f, 6.39f);
+                    GameObject Score2 = Instantiate(FrogIcon, Goal2, Quaternion.identity) as GameObject;
+
+                    round = myGameManager.RoundAdder(round);
+                }
+                else
+                {
+                    PlayerKiller();
+                }
+            }
+            else if (collision.transform.tag == "Scorer3")
+            {
+                if (Scorezone3Filled == false)
+                {
+                    myGameManager.UpdateScore(100);
+                    Scorezone3Filled = true;
+
+                    Vector2 Goal3 = new Vector2(3.06f, 6.39f);
+                    GameObject Score3 = Instantiate(FrogIcon, Goal3, Quaternion.identity) as GameObject;
+
+                   round = myGameManager.RoundAdder(round);
+                }
+                else
+                {
+                    PlayerKiller();
+                }
+            }
+            else if (collision.transform.tag == "Scorer4")
+            {
+                if (Scorezone4Filled == false)
+                {
+                    myGameManager.UpdateScore(100);
+                    Scorezone4Filled = true;
+
+                    Vector2 Goal4 = new Vector2(6.14f, 6.39f);
+                    GameObject Score4 = Instantiate(FrogIcon, Goal4, Quaternion.identity) as GameObject;
+
+                   round = myGameManager.RoundAdder(round);
+                }
+                else
+                {
+                    PlayerKiller();
+                }
+            }
         }
 
     }
@@ -121,13 +218,29 @@ public class Player : MonoBehaviour
 
     void PlayerKiller()
     {
+        if (playerLivesRemaining != 0)
+        {
+            GetComponent<AudioSource>().PlayOneShot(deathSound);
+            Instantiate(explosionFX, transform.position, Quaternion.identity);
 
-        GetComponent<SpriteRenderer>().enabled = false;
+            GameObject playerMover = GameObject.Find("Player");
+            Player player = playerMover.GetComponent<Player>();
+            player.transform.position = new Vector2(0f, -5.5f);
 
-        playerIsAlive = false;
-        playerCanMove = false;
-        GetComponent<AudioSource>().PlayOneShot(deathSound);
-        Instantiate(explosionFX, transform.position, Quaternion.identity);
+            playerLivesRemaining -= 1;
+            currentLivesUI.text = playerLivesRemaining.ToString();
+        }
+        else
+        {
+            GetComponent<AudioSource>().PlayOneShot(deathSound);
+            Instantiate(explosionFX, transform.position, Quaternion.identity);
+
+            GetComponent<SpriteRenderer>().enabled = false;
+
+            playerIsAlive = false;
+            playerCanMove = false;
+        }
+
     }
 
 }

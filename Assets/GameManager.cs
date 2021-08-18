@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
     {
         currentScoreUI.text = "0";
         currentRoundUI.text = "1";
+
         GetComponent<AudioSource>().PlayOneShot(GetReady);
     }
 
@@ -68,5 +69,20 @@ public class GameManager : MonoBehaviour
     {
         currentScore += scoreNum;
         currentScoreUI.text = currentScore.ToString();
+    }
+
+    public int RoundAdder(int round)
+    {
+        round += 1;
+        currentRoundUI.text = round.ToString();
+
+        GameObject playerMover = GameObject.Find("Player");
+        Player player = playerMover.GetComponent<Player>();
+
+        player.transform.position = new Vector2(0f, -5.5f);
+
+        return round;
+
+
     }
 }
