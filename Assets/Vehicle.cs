@@ -18,7 +18,6 @@ public class Vehicle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        transform.position = startingPosition;
 
     }
 
@@ -27,10 +26,16 @@ public class Vehicle : MonoBehaviour
     {
         transform.Translate(Vector2.left * Time.deltaTime * speed * moveDirection);
 
-        if ((transform.position.x * moveDirection) < (endPosition.x * moveDirection))
+        if ( this.transform.tag == "car row 1")
         {
-            transform.position = startingPosition;
+            if ((transform.position.x) < (-12))
+            {
+                transform.position = new Vector3(8f, -4.5f, 0f);
+            }
         }
+
+        // Do rest of car rows
+
     }
 
 }
