@@ -14,6 +14,11 @@ public class GameManager : MonoBehaviour
     public TMP_Text currentScoreUI;
     public TMP_Text currentRoundUI;
 
+    [Header("GameFinish")]
+    public TMP_Text youwinorloseUI;
+    public GameObject uiGameOver;
+   
+
     [Header("Startup")]
     public TMP_Text readyUI;
     public float Starttime1 = 2;
@@ -68,7 +73,7 @@ public class GameManager : MonoBehaviour
     public void UpdateScore(int scoreNum)
         //Scoring goes:
         // 1 point: Move up
-        // 50 points: Reach a goal
+        // 70 points: Reach a goal
         // 100 points: Get a bonus super challege coin
         // Then, if the player gets all 5 frogs to the goals:
         // 100 points for each spare life
@@ -92,4 +97,19 @@ public class GameManager : MonoBehaviour
 
 
     }
-}
+
+    public void GameOver(bool win)
+    {
+        if (win == true)
+        {
+            youwinorloseUI.text = "You win!";
+        }
+        else if (win == false)
+        {
+            youwinorloseUI.text = "You lose!";
+        }
+        uiGameOver.SetActive(true);
+
+    }
+
+ }

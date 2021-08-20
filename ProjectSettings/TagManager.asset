@@ -19,6 +19,7 @@ TagManager:
   - croc row 1
   - croc row 2
   - bug row 1
+  - car row 5
   layers:
   - Default
   - TransparentFX

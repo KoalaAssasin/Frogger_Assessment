@@ -61,7 +61,13 @@ public class Vehicle : MonoBehaviour
             }
         }
 
-        // Do rest of car rows
+        if (this.transform.tag == "car row 5")
+        {
+            if ((transform.position.x) < (-12))
+            {
+                transform.position = new Vector3(8f, -0.5f, 0f);
+            }
+        }
 
         //Crocs
         if (this.transform.tag == "croc row 1")
