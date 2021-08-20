@@ -66,6 +66,13 @@ public class GameManager : MonoBehaviour
     }
 
     public void UpdateScore(int scoreNum)
+        //Scoring goes:
+        // 1 point: Move up
+        // 50 points: Reach a goal
+        // 100 points: Get a bonus super challege coin
+        // Then, if the player gets all 5 frogs to the goals:
+        // 100 points for each spare life
+        // 10 (?) points for each spare second
     {
         currentScore += scoreNum;
         currentScoreUI.text = currentScore.ToString();

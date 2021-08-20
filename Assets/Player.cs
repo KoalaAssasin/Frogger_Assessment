@@ -104,7 +104,7 @@ public class Player : MonoBehaviour
             }
             else if (collision.transform.tag == "Coiny")
             {
-                myGameManager.UpdateScore(10);
+                myGameManager.UpdateScore(100);
                 Destroy(collision.gameObject);
             }
 
@@ -113,7 +113,7 @@ public class Player : MonoBehaviour
             {
                 if (Scorezone0Filled == false)
                 {
-                    myGameManager.UpdateScore(100);
+                    myGameManager.UpdateScore(50);
                     Scorezone0Filled = true;
 
                     Vector2 Goal0 = new Vector2(-6.14f, 6.39f);
@@ -130,7 +130,7 @@ public class Player : MonoBehaviour
             {
                 if (Scorezone1Filled == false)
                 {
-                    myGameManager.UpdateScore(100);
+                    myGameManager.UpdateScore(50);
                     Scorezone1Filled = true;
 
                     Vector2 Goal1 = new Vector2(-3.09f, 6.39f);
@@ -148,7 +148,7 @@ public class Player : MonoBehaviour
             {
                 if (Scorezone2Filled == false)
                 {
-                    myGameManager.UpdateScore(100);
+                    myGameManager.UpdateScore(50);
                     Scorezone2Filled = true;
 
                     Vector2 Goal2 = new Vector2(-0.04f, 6.39f);
@@ -165,7 +165,7 @@ public class Player : MonoBehaviour
             {
                 if (Scorezone3Filled == false)
                 {
-                    myGameManager.UpdateScore(100);
+                    myGameManager.UpdateScore(50);
                     Scorezone3Filled = true;
 
                     Vector2 Goal3 = new Vector2(3.06f, 6.39f);
@@ -182,7 +182,7 @@ public class Player : MonoBehaviour
             {
                 if (Scorezone4Filled == false)
                 {
-                    myGameManager.UpdateScore(100);
+                    myGameManager.UpdateScore(50);
                     Scorezone4Filled = true;
 
                     Vector2 Goal4 = new Vector2(6.14f, 6.39f);
