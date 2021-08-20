@@ -17,11 +17,20 @@ public class MenuManager : MonoBehaviour
         
     }
 
+    public void PlayMainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
     public void PlayFroge()
     {
         SceneManager.LoadScene(1);
     }
 
+    public void PlayCredits()
+    {
+        SceneManager.LoadScene(2);
+    }
     public void QuitGame()
     {
         Application.Quit();

@@ -15,7 +15,9 @@ public class GameManager : MonoBehaviour
     public TMP_Text currentRoundUI;
 
     [Header("GameFinish")]
+    public TMP_Text finalScoreUI;
     public TMP_Text youwinorloseUI;
+    public GameObject uiGame;
     public GameObject uiGameOver;
    
 
@@ -108,8 +110,11 @@ public class GameManager : MonoBehaviour
         {
             youwinorloseUI.text = "You lose!";
         }
+
+        finalScoreUI.text = currentScore.ToString();
         uiGameOver.SetActive(true);
 
+        uiGame.SetActive(false);
     }
 
  }
