@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.ShortcutManagement;
 using UnityEngine;
 using TMPro;
 
@@ -30,7 +29,7 @@ public class Player : MonoBehaviour
     public AudioClip jumpSound;
     public AudioClip deathSound;
 
-    //Setting if score zones can be landed in again
+    //Setting if score zones can be landed
     public bool Scorezone0Filled = false;
     public bool Scorezone1Filled = false;
     public bool Scorezone2Filled = false;
@@ -51,7 +50,6 @@ public class Player : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.UpArrow) && transform.position.y < myGameManager.levelConstraintTop)
             {
-                //transform.position = transform.position + new Vector3(0, 1, 0);
                 transform.Translate(new Vector2(0, 1));
                 GetComponent<AudioSource>().PlayOneShot(jumpSound);
                 //currently adds 1 point when moving up
@@ -82,7 +80,9 @@ public class Player : MonoBehaviour
         if(inWater == true && onPlatform == false && playerIsAlive == true)
         {
             PlayerKiller();
+            inWater = false;
         }
+
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -218,29 +218,35 @@ public class Player : MonoBehaviour
 
     void PlayerKiller()
     {
-        if (playerLivesRemaining != 0)
+        if (playerIsAlive)
         {
-            GetComponent<AudioSource>().PlayOneShot(deathSound);
-            Instantiate(explosionFX, transform.position, Quaternion.identity);
 
-            GameObject playerMover = GameObject.Find("Player");
-            Player player = playerMover.GetComponent<Player>();
-            player.transform.position = new Vector2(0f, -5.5f);
+            if (playerLivesRemaining != 0)
+            {
 
-            playerLivesRemaining -= 1;
-            currentLivesUI.text = playerLivesRemaining.ToString();
+                GetComponent<AudioSource>().PlayOneShot(deathSound);
+                Instantiate(explosionFX, transform.position, Quaternion.identity);
+
+                GameObject playerMover = GameObject.Find("Player");
+                Player player = playerMover.GetComponent<Player>();
+                player.transform.position = new Vector2(0f, -5.5f);
+
+                playerLivesRemaining -= 1;
+                currentLivesUI.text = playerLivesRemaining.ToString();
+
+            }
+            else
+            {
+                GetComponent<AudioSource>().PlayOneShot(deathSound);
+                Instantiate(explosionFX, transform.position, Quaternion.identity);
+
+                GetComponent<SpriteRenderer>().enabled = false;
+
+                playerIsAlive = false;
+                playerCanMove = false;
+            }
         }
-        else
-        {
-            GetComponent<AudioSource>().PlayOneShot(deathSound);
-            Instantiate(explosionFX, transform.position, Quaternion.identity);
-
-            GetComponent<SpriteRenderer>().enabled = false;
-
-            playerIsAlive = false;
-            playerCanMove = false;
-        }
-
+        
     }
 
 }

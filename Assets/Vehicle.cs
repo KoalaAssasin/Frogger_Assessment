@@ -34,6 +34,22 @@ public class Vehicle : MonoBehaviour
             }
         }
 
+        if (this.transform.tag == "car row 2")
+        {
+            if ((transform.position.x) > 12)
+            {
+                transform.position = new Vector3(-8f, -3.5f, 0f);
+            }
+        }
+
+        if (this.transform.tag == "car row 3")
+        {
+            if ((transform.position.x) < (-12))
+            {
+                transform.position = new Vector3(8f, -2.5f, 0f);
+            }
+        }
+
         // Do rest of car rows
 
     }

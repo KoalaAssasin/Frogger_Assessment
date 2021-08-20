@@ -13,6 +13,8 @@ TagManager:
   - Scorer3
   - Scorer4
   - car row 1
+  - car row 2
+  - car row 3
   layers:
   - Default
   - TransparentFX
