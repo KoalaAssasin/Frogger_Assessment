@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// This script must be utlised as the core component on the 'vehicle' obstacle in the frogger game.
+/// This script must be utlised as the core component on the 'vehicle' obstacle in the frogger game. Also controlls movemenst for crocs and bugs
 /// </summary>
 public class Vehicle : MonoBehaviour
 {
@@ -17,13 +17,11 @@ public class Vehicle : MonoBehaviour
     public Vector2 startingPosition; 
     public Vector2 endPosition; 
 
-    // Start is called before the first frame update
     void Start()
     {
 
     }
 
-    // Update is called once per frame
     void Update()
     {
         transform.Translate(Vector2.left * Time.deltaTime * speed * moveDirection);

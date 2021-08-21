@@ -34,11 +34,10 @@ public class GameManager : MonoBehaviour
 
     [Header("Gameplay Loop")]
     public bool isGameRunning; //Is the gameplay part of the game current active?
-    public float totalGameTime; //The maximum amount of time or the total time avilable to the player.
-    public float gameTimeRemaining; //The current elapsed time
+    public float gameTimeRemaining = 121; //Two munutes, plus two seconds for when player can't move during the get ready
+    public TMP_Text TimeUI;
     public int currentRound = 1;
 
-    // Start is called before the first frame update
     void Start()
     {
         currentScoreUI.text = "0";
@@ -47,9 +46,9 @@ public class GameManager : MonoBehaviour
         GetComponent<AudioSource>().PlayOneShot(GetReady);
     }
 
-    // Update is called once per frame
     void Update()
     {
+        // Stops the player from moving right away and shows ready message
         if (Starttime1 > 1)
         {
             Starttime1 -= Time.deltaTime;
@@ -70,6 +69,17 @@ public class GameManager : MonoBehaviour
         {
             readyUI.text = " ";
         }
+
+        if (gameTimeRemaining > 0)
+        {
+            TimeUI.text = Mathf.Round(gameTimeRemaining).ToString();
+            gameTimeRemaining -= Time.deltaTime;
+        }
+        else
+        {
+            GameOver(false);
+        }
+
     }
 
     public void UpdateScore(int scoreNum)
@@ -78,13 +88,13 @@ public class GameManager : MonoBehaviour
         // 70 points: Reach a goal
         // 100 points: Get a bonus super challege coin
         // Then, if the player gets all 5 frogs to the goals:
-        // 100 points for each spare life
         // 10 (?) points for each spare second
     {
         currentScore += scoreNum;
         currentScoreUI.text = currentScore.ToString();
     }
 
+    // Adds a round to the counter and puts the player back to the start
     public int RoundAdder(int round)
     {
         round += 1;
@@ -100,11 +110,16 @@ public class GameManager : MonoBehaviour
 
     }
 
+    // Self explanatory
     public void GameOver(bool win)
     {
         if (win == true)
         {
             youwinorloseUI.text = "You win!";
+
+            int timeleft = (int)gameTimeRemaining;
+
+            UpdateScore(timeleft * 10);
         }
         else if (win == false)
         {

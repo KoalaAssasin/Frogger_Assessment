@@ -15,12 +15,14 @@ public class Platform : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Puts the platforms at their start spots
         transform.position = startingPosition;
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Moves the platforms and puts them back at start when they go off screen
         transform.Translate(Vector2.left * Time.deltaTime * speed * moveDirection);
 
         if ((transform.position.x * moveDirection) < (endPosition.x * moveDirection))

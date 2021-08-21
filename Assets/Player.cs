@@ -36,16 +36,15 @@ public class Player : MonoBehaviour
     public bool Scorezone3Filled = false;
     public bool Scorezone4Filled = false;
 
-    // Start is called before the first frame update
     void Start()
     {
         myGameManager = GameObject.FindObjectOfType<GameManager>();
         currentLivesUI.text = playerLivesRemaining.ToString();
     }
 
-    // Update is called once per frame
     void Update()
     {
+        // Letting the player move in all 4 directions (when alive and can move)
         if(playerIsAlive && playerCanMove == true)
         {
             if (Input.GetKeyDown(KeyCode.UpArrow) && transform.position.y < myGameManager.levelConstraintTop)
@@ -77,6 +76,7 @@ public class Player : MonoBehaviour
 
     private void LateUpdate()
     {
+        // Kills player if in the water and not on a platform
         if(inWater == true && onPlatform == false && playerIsAlive == true)
         {
             PlayerKiller();
@@ -89,10 +89,12 @@ public class Player : MonoBehaviour
     {
         if(playerIsAlive)
         {
+            // Kill player if hit by a vehicle
             if (collision.transform.GetComponent<Vehicle>() != null)
             {
                 PlayerKiller();
             }
+            // Has the player move with a platfor while on it
             else if (collision.transform.GetComponent<Platform>() != null)
             {
                 transform.SetParent(collision.transform);
@@ -102,6 +104,7 @@ public class Player : MonoBehaviour
             {
                 inWater = true;
             }
+            // Lets player pick up coins
             else if (collision.transform.tag == "Coiny")
             {
                 myGameManager.UpdateScore(100);
@@ -210,6 +213,7 @@ public class Player : MonoBehaviour
     {
         if (playerIsAlive)
         {
+            // Stops the player moving with platform once it jumps off
             if (collision.transform.GetComponent<Platform>() != null)
             {
                 transform.SetParent(null);
@@ -229,7 +233,7 @@ public class Player : MonoBehaviour
 
             if (playerLivesRemaining != 0)
             {
-
+                // Removes a life and puts player at the start
                 GetComponent<AudioSource>().PlayOneShot(deathSound);
                 Instantiate(explosionFX, transform.position, Quaternion.identity);
 
@@ -243,6 +247,7 @@ public class Player : MonoBehaviour
             }
             else
             {
+                // Ends the game
                 GetComponent<AudioSource>().PlayOneShot(deathSound);
                 Instantiate(explosionFX, transform.position, Quaternion.identity);
 
