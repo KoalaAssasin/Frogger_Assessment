@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
     //Audio section
     public AudioClip jumpSound;
     public AudioClip deathSound;
+    public AudioClip coinSound;
 
     //Setting if score zones can be landed
     public bool Scorezone0Filled = false;
@@ -113,6 +114,8 @@ public class Player : MonoBehaviour
             // Lets player pick up coins
             else if (collision.transform.tag == "Coiny")
             {
+                GetComponent<AudioSource>().PlayOneShot(coinSound);
+
                 myGameManager.UpdateScore(100);
                 Destroy(collision.gameObject);
             }
