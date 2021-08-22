@@ -70,17 +70,17 @@ public class Vehicle : MonoBehaviour
         //Crocs
         if (this.transform.tag == "croc row 1")
         {
-            if ((transform.position.x) > 12)
+            if ((transform.position.x) > 8)
             {
-                transform.position = new Vector3(-8f, 5.5f, 0f);
+                transform.position = new Vector3(-10f, 1.5f, 0f);
             }
         }
 
         if (this.transform.tag == "croc row 2")
         {
-            if ((transform.position.x) > 12)
+            if ((transform.position.x) > 8)
             {
-                transform.position = new Vector3(-8f, 3.5f, 0f);
+                transform.position = new Vector3(-20f, 3.5f, 0f);
             }
         }
 

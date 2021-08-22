@@ -90,12 +90,18 @@ public class Player : MonoBehaviour
         if(playerIsAlive)
         {
             // Kill player if hit by a vehicle
-            if (collision.transform.GetComponent<Vehicle>() != null)
+            if (collision.transform.tag == "car row 1" || collision.transform.tag == "car row 2" || collision.transform.tag == "car row 3" 
+                || collision.transform.tag == "car row 4" || collision.transform.tag == "car row 5")
             {
                 PlayerKiller();
             }
-            // Has the player move with a platfor while on it
-            else if (collision.transform.GetComponent<Platform>() != null)
+            // Kill player if they hit a croc or bug
+            else if (collision.transform.tag == "croc row 1" || collision.transform.tag == "croc row 2" || collision.transform.tag == "bug row 1")
+            {
+                PlayerKiller();
+            }
+            // Has the player move with a platform while on it
+            else if (collision.transform.GetComponent<Platform>() != null) 
             {
                 transform.SetParent(collision.transform);
                 onPlatform = true;

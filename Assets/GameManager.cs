@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
 
     [Header("GameFinish")]
     public TMP_Text finalScoreUI;
+    public TMP_Text timeBonusUI;
     public TMP_Text youwinorloseUI;
     public GameObject uiGame;
     public GameObject uiGameOver;
@@ -34,7 +35,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Gameplay Loop")]
     public bool isGameRunning; //Is the gameplay part of the game current active?
-    public float gameTimeRemaining = 121; //Two munutes, plus two seconds for when player can't move during the get ready
+    public float gameTimeRemaining = 181; //Three minutes, plus two seconds for when player can't move during the get ready
     public TMP_Text TimeUI;
     public int currentRound = 1;
 
@@ -88,7 +89,7 @@ public class GameManager : MonoBehaviour
         // 70 points: Reach a goal
         // 100 points: Get a bonus super challege coin
         // Then, if the player gets all 5 frogs to the goals:
-        // 10 (?) points for each spare second
+        // 15 points for each spare second
     {
         currentScore += scoreNum;
         currentScoreUI.text = currentScore.ToString();
@@ -119,11 +120,13 @@ public class GameManager : MonoBehaviour
 
             int timeleft = (int)gameTimeRemaining;
 
-            UpdateScore(timeleft * 10);
+            timeBonusUI.text = (timeleft * 15).ToString();
+            UpdateScore(timeleft * 15);
         }
         else if (win == false)
         {
             youwinorloseUI.text = "You lose!";
+            timeBonusUI.text = "No";
         }
 
         finalScoreUI.text = currentScore.ToString();
